@@ -30,18 +30,18 @@ type SongData struct {
 }
 
 //读取文件数据
-func readSongDataFile() {
+func readSongDataFile() error {
 	bin, err := ioutil.ReadFile(*dataFile)
 	if err != nil {
 		log.Println("readSongDataFile:read data err:", err)
-		return
+		return err
 	}
 
 	var d DataFile
 	err = json.Unmarshal(bin, &d)
 	if err != nil {
 		log.Println("readSongDataFile:read data err:", err)
-		return
+		return err
 	}
 
 	StorageSongDataLock.Lock()
@@ -49,6 +49,7 @@ func readSongDataFile() {
 	StorageSongData = d
 
 	log.Println("readSongDataFile:read data finish, song count:", len(d.Data))
+	return nil
 }
 
 //监视数据文件更新
@@ -63,8 +64,13 @@ func monDataFileUpdate() {
 			if stat.ModTime().Sub(lastMtime) > 0 {
 				log.Println("monDataFileUpdate find data file update")
 
-				readSongDataFile()
-				fillSongMp3Url()
+				if readSongDataFile() == nil && fillSongMp3Url() == nil {
+					if bLog, err := build(); err == nil { //自动重新构建
+						log.Println("autobuild succeed:\n" + bLog)
+					} else {
+						log.Println("autobuild fail:", err)
+					}
+				}
 
 				lastMtime = stat.ModTime()
 			}
@@ -74,7 +80,7 @@ func monDataFileUpdate() {
 }
 
 //检查并填充歌曲地址
-func fillSongMp3Url() {
+func fillSongMp3Url() error {
 	StorageSongDataLock.Lock()
 	defer StorageSongDataLock.Unlock()
 
@@ -101,9 +107,12 @@ func fillSongMp3Url() {
 
 			if err != nil {
 				log.Println("fillSongMp3Url:fetch music mp3 url error:", err, "info:", v.SongInfo)
+				return err
 			} else {
 				log.Println("fillSongMp3Url: fill url:", StorageSongData.Data[k].Mp3Url, "for:", v.SongInfo)
 			}
 		}
 	}
+
+	return nil
 }

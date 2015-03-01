@@ -6,13 +6,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
 const (
-	XIAMI_INFO_JSONP = `http://www.xiami.com/song/playlist/id/%d/object_name/default/object_id/0/cat/json?r=song%2Fdetail&song_id=%d&callback=jsonp1`
+	XIAMI_INFO_JSONP = `http://www.xiami.com/song/playlist/id/%d/object_name/default/object_id/0/cat/json?r=song%%2Fdetail&song_id=%d&callback=jsonp1`
 )
 
 type jsonpRst struct { //只要关键字段
@@ -28,7 +29,7 @@ type SongInfo struct { //只要关键字段
 
 //根据虾米id获取歌曲url
 func GetSongUrl(songId int) (string, error) {
-	resp, err := http.Get(fmt.Sprintf(XIAMI_INFO_JSONP, songId))
+	resp, err := http.Get(fmt.Sprintf(XIAMI_INFO_JSONP, songId, songId))
 	if err != nil {
 		return "", err
 	}
@@ -45,6 +46,7 @@ func GetSongUrl(songId int) (string, error) {
 	var rst jsonpRst
 	err = json.Unmarshal(bin, &rst)
 	if err != nil {
+		log.Println("json.Unmarshal err, origin:", string(bin))
 		return "", err
 	}
 

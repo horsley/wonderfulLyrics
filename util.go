@@ -43,7 +43,7 @@ func switchPwd() {
 
 //初始化文件和stdout双输出日志
 func initLog(file string) {
-	logFile, err := os.OpenFile(file, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0777)
+	logFile, err := os.OpenFile(file, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println("open log file:", file, "error:", err)
 		os.Exit(1)
