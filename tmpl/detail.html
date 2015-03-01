@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.PageTitle}}</title>
+    <link rel="stylesheet" href="http://cdn.staticfile.org/pure/0.4.2/pure-min.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css" media="screen">
+    <style>	
+	#play-pause{background:#222;width:70px;height:70px;border:0;border-radius:35px;outline:none;box-shadow:1px 1px 3px #666666;background-image: linear-gradient(to bottom, #555, #000000);background-image: -webkit-linear-gradient(top, #555, #000000);}
+	#play-pause i{font-size:2em;color:#fefefe}
+	#footer{margin:2em 0;text-align:center;width:100%}
+	.song-img img{max-width:100%}
+	.lyric{padding:28px 28px 18px;font-size:24px;text-shadow: 2px 2px 4px #ccc;}
+	.song-info{color:#aaa;font-size:16px;text-align:right;padding-right:28px}
+	.cpr {font-size:0.8em;color:#777;border-top:1px #eee solid;margin:1em;padding:1em}
+	.cpr a {color:#777;text-decoration:none}
+	.right{float:right}
+    </style>
+</head>
+<body>
+	<div class="song-img">
+		<img src="{{.BgImgUrl}}">
+	</div>
+	<div class="lyric">
+		<span>{{.BestLyric}}</span>
+	</div>
+	<div class="song-info">
+		<span>{{.SongInfo}}</span>
+	</div>
+	<div id="footer">
+		<button id="play-pause" type="button"><i class="fa fa-play"></i></button>
+	</div>
+	<div class="cpr">
+	<div class="right">最美歌词 &copy; 2015</div>
+	<a href="{{.HomeUrl}}">回到首页</a>
+	</div>
+
+    <!-- 加载 audio js -->
+    <script src="/js/audio5.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+		var loaded = false;
+
+		var playPause = function () {
+		  if (!loaded) {
+		    this.one('canplay', function () {
+		      loaded = true;
+		      this.play();
+		    }, this);
+		    this.load('{{.Mp3Url}}');
+		  } else {
+		    this.playPause();
+		  }
+		}
+		var audio5js = new Audio5js({
+		  swf_path: './flash/audio5js.swf',
+		  ready: function () {
+		    var btn = document.getElementById('play-pause');
+		    btn.addEventListener('click', playPause.bind(this), false);
+			
+			this.on('ended', function () {
+			  btn.innerHTML = '<i class="fa fa-play"></i>';
+		    }, this);
+			
+			this.on('play', function () {
+			  btn.innerHTML = '<i class="fa fa-pause"></i>';
+		    }, this);
+			
+			this.on('pause', function () {
+			  btn.innerHTML = '<i class="fa fa-play"></i>';
+		    }, this);
+		  }
+		});
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+2015/03/01 11:08:15 wonderfulLyrics server start!
+2015/03/01 11:08:20 monDataFileUpdate find data file update
+2015/03/01 11:08:20 readSongDataFile:read data finish, song count: 4
+2015/03/01 11:08:20 fillSongMp3Url: fill url: http://m5.file.xiami.com/944/172930944/217423110/1773862701_16151371_l.mp3?auth_key=47b8e95f20d6ce76c0de9291bae6cacb-1425254400-0-null for: 《微甜的回忆》 徐子珊
+2015/03/01 11:08:20 fillSongMp3Url: fill url: http://m5.file.xiami.com/980/78980/414285/1769902385_3641757_l.mp3?auth_key=1e49b6569bf5ba1eb4e1ff7774862fae-1425254400-0-null for: 《我的歌声里》 曲婉婷
+2015/03/01 11:08:20 fillSongMp3Url: fill url: http://m5.file.xiami.com/110/3110/70071/1770692720_2899517_l.mp3?auth_key=e2ef673eca2721bb978511ea997c2b95-1425254400-0-null for: 《干杯》 五月天
+2015/03/01 11:08:20 fillSongMp3Url: fill url: http://m5.file.xiami.com/333/56333/487102/1770201852_10307930_l.mp3?auth_key=5bd735da3ff53209fc50d7889c73d33d-1425254400-0-null for: 《夜空中最亮的星》 逃跑计划
+2015/03/01 11:10:06 build: build file: build/57a7f72ec9b3e6da0549788d4ec54b7e.html size: 2843 succeed
+build: build file: build/a4bcfb25ec11b0a6306722e58a9af57a.html size: 2811 succeed
+build: build file: build/b9405ac7f7b69c450f670fa84a7c42b1.html size: 2878 succeed
+build: build file: build/90d378c978b7323e9a38b04f6e282e5a.html size: 2847 succeed
+build: build file: build/index.html size: 1671 succeed
+
